@@ -1,0 +1,14 @@
+{% if steps %}
+  <div class="commerce-checkout-progress">
+    {% for key, value in steps %}
+      {% if key is same as(step) %}
+        <strong>{{ value.label }}</strong>
+      {% else %}
+        {{ value.label }}
+      {% endif %}
+      {% if value is not same as(steps|last) %}
+        {{ divider }}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

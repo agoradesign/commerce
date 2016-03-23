@@ -142,6 +142,28 @@ class ProductVariationTypeForm extends BundleEntityFormBase {
   /**
    * {@inheritdoc}
    */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+
+    $attribute_storage = $this->entityTypeManager->getStorage('commerce_product_attribute');
+    $original_attributes = $form_state->getValue('original_attributes');
+    $attributes = array_filter($form_state->getValue('attributes'));
+    $unselected_attributes = array_diff($original_attributes, $attributes);
+    if ($unselected_attributes) {
+      /** @var \Drupal\commerce_product\Entity\ProductAttributeInterface[] $unselected_attributes */
+      $unselected_attributes = $attribute_storage->loadMultiple($unselected_attributes);
+      foreach ($unselected_attributes as $attribute) {
+        if (!$this->attributeFieldManager->canDeleteField($attribute)) {
+          $form_state->setErrorByName('attributes', t("The @label attribute can't be removed because it has data.", ['@label' => $attribute->label()]));
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function save(array $form, FormStateInterface $form_state) {
     $this->entity->save();
     drupal_set_message($this->t('Saved the %label product variation type.', ['%label' => $this->entity->label()]));

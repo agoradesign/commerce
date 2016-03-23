@@ -1,0 +1,6 @@
+administer checkout:
+  title: 'Administer checkout'
+  'restrict access': TRUE
+access checkout:
+  title: 'Access checkout'
+  description: 'Complete a purchase through the checkout form.'
