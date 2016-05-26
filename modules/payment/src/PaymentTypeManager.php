@@ -29,12 +29,15 @@ class PaymentTypeManager extends DefaultPluginManager {
   /**
    * Constructs a new PaymentTypeManager object.
    *
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
+   * @param \Traversable $namespaces
+   *   An object that implements \Traversable which contains the root paths
+   *   keyed by the corresponding namespace to look for plugin implementations.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
    *   The cache backend.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    */
-  public function __construct(ModuleHandlerInterface $module_handler, CacheBackendInterface $cache_backend) {
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     $this->moduleHandler = $module_handler;
     $this->setCacheBackend($cache_backend, 'commerce_payment_type', ['commerce_payment_type']);
   }
