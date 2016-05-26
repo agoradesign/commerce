@@ -39,7 +39,7 @@ interface PaymentGatewayInterface extends ConfigurablePluginInterface, PluginFor
   public function getPaymentType();
 
   /**
-   * Gets the mode in which the paymnet gateway is operating.
+   * Gets the mode in which the payment gateway is operating.
    *
    * @return string
    *   The machine name of the mode.
